@@ -3,6 +3,7 @@
 " ==============
 
 let g:cosco_ignore_comment_lines = get(g:, 'cosco_ignore_comment_lines', 0)
+let g:cosco_ignore_pattern = get(g:, 'cosco_ignore_pattern', 0)
 
 " =================
 " Helper functions:
@@ -60,6 +61,11 @@ function! s:hasUnactionableLines()
     " Ignores lines if the next one starts with a "{"
     if b:nextLineFirstChar == '{'
         return 1
+    endif
+
+    " Ignores lines if it matches a regex
+    if match(getline(line(".")), g:cosco_ignore_pattern) != -1
+      return 1
     endif
 endfunction
 
